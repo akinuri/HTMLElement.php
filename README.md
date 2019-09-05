@@ -59,4 +59,4 @@ The above code produces the following HTML:
 </ul>
 ```
 
-<small>**Note**: The actual code is not indented. Might add that later. Maybe.</small>
+<small>**Note**: The actual output is not indented. Might add that later. Maybe.</small>
