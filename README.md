@@ -1,4 +1,4 @@
-# element.php
+# HTMLElement.php
 
 A class for creating HTML dynamically.
 
