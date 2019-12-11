@@ -52,24 +52,24 @@ class HTMLElement {
         }
     }
     
-    function innerHMTL(callable $escape_function = null) {
-        $inner_html = "";
+    function innerHMTL(callable $escapeFunction = null) {
+        $innerHMTL = "";
         foreach ($this->children as $child) {
             $type = gettype($child);
             if ($type == "string") {
-                if ($escape_function && is_callable($escape_function)) {
-                    $inner_html .= $escape_function($child);
+                if ($escapeFunction && is_callable($escapeFunction)) {
+                    $innerHMTL .= $escapeFunction($child);
                 } else {
-                    $inner_html .= $child;
+                    $innerHMTL .= $child;
                 }
             } else if ($type == "object") {
-                $inner_html .= $child->outerHTML($escape_function);
+                $innerHMTL .= $child->outerHTML($escapeFunction);
             }
         }
-        return $inner_html;
+        return $innerHMTL;
     }
     
-    public function outerHTML($escape_function = null) {
+    public function outerHTML($escapeFunction = null) {
         $attributes = "";
         
         if ($this->id) {
@@ -89,11 +89,11 @@ class HTMLElement {
             return "<{$this->tagName}{$attributes} />";
         }
         
-        return "<{$this->tagName}{$attributes}>" . $this->innerHMTL($escape_function) . "</{$this->tagName}>";
+        return "<{$this->tagName}{$attributes}>" . $this->innerHMTL($escapeFunction) . "</{$this->tagName}>";
     }
     
-    public function output($escape_function = null) {
-        echo $this->outerHTML($escape_function);
+    public function output($escapeFunction = null) {
+        echo $this->outerHTML($escapeFunction);
     }
 }
 

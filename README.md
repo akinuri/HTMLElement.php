@@ -23,9 +23,9 @@ new HTMLElement(string $tagName [, array $attributes [, $children]])
 
 * `setAttribute(string $attribute, $value = "")`
 * `append($element)`
-* `innerHTML(callable $escape_function = null)`
-* `outerHTML(callable $escape_function = null)`
-* `output(callable $escape_function = null)`
+* `innerHTML(callable $escapeFunction = null)`
+* `outerHTML(callable $escapeFunction = null)`
+* `output(callable $escapeFunction = null)`
 
 ## Usage
 
