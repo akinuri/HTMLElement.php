@@ -8,7 +8,7 @@ I'm not a fan of mixing PHP with HTML when creating HTML code with lots of PHP v
 ## Syntax
 
 ```php
-new HTMLElement(string $tagName, array $attributes, mixed $children)
+new HTMLElement(string $tagName [, array $attributes [, $children]])
 ```
 
 
@@ -21,11 +21,11 @@ new HTMLElement(string $tagName, array $attributes, mixed $children)
 
 ### Methods
 
-* `setAttribute(string $attribute, string $value)`
-* `append(mixed $element)`
-* `innerHTML()`
-* `outerHTML()`
-* `output()`
+* `setAttribute(string $attribute, $value = "")`
+* `append($element)`
+* `innerHTML(callable $escape_function = null)`
+* `outerHTML(callable $escape_function = null)`
+* `output(callable $escape_function = null)`
 
 ## Usage
 

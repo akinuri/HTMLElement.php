@@ -10,7 +10,7 @@ class HTMLElement {
     public $attributes = [];
     public $children   = [];
     
-    function __construct($tagName = null, $attributes = null, $children = null) {
+    public function __construct(string $tagName, array $attributes = null, $children = null) {
         if ($tagName) {
             $this->tagName = $tagName;
         }
@@ -26,17 +26,12 @@ class HTMLElement {
         }
     }
     
-    public function setAttribute($attr = null, $value = "") {
-        if ($attr) {
-            $this->attributes[$attr] = $value;
-        }
+    public function setAttribute(string $attribute, $value = "") {
+        $this->attributes[$attribute] = $value;
     }
     
-    public function append($element = null) {
-        if (!$element) return;
-        
+    public function append($element) {
         switch (gettype($element)) {
-            
             case "string":
             case "integer":
             case "double":
@@ -59,20 +54,24 @@ class HTMLElement {
         }
     }
     
-    function innerHMTL() {
+    function innerHMTL(callable $escape_function = null) {
         $inner_html = "";
         foreach ($this->children as $child) {
             $type = gettype($child);
             if ($type == "string") {
-                $inner_html .= $child;
+                if ($escape_function && is_callable($escape_function)) {
+                    $inner_html .= $escape_function($child);
+                } else {
+                    $inner_html .= $child;
+                }
             } else if ($type == "object") {
-                $inner_html .= $child->outerHTML();
+                $inner_html .= $child->outerHTML($escape_function);
             }
         }
         return $inner_html;
     }
     
-    public function outerHTML() {
+    public function outerHTML($escape_function = null) {
         
         $attributes = "";
         
@@ -93,15 +92,15 @@ class HTMLElement {
             return "<{$this->tagName}{$attributes} />";
         }
         
-        return "<{$this->tagName}{$attributes}>" . $this->innerHMTL() . "</{$this->tagName}>";
+        return "<{$this->tagName}{$attributes}>" . $this->innerHMTL($escape_function) . "</{$this->tagName}>";
     }
     
-    public function output() {
-        echo $this->outerHTML();
+    public function output($escape_function = null) {
+        echo $this->outerHTML($escape_function);
     }
 }
 
 // class wrapper for easier access
-function elem($tagName = null, $attributes = null, $children = null) {
+function elem(string $tagName, array $attributes = null, $children = null) {
     return new HTMLElement($tagName, $attributes, $children);
 }

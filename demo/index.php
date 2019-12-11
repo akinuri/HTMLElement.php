@@ -1,6 +1,6 @@
 <?php
 
-include "HTMLElement.php";
+include "../src/HTMLElement.php";
 
 $list = new HTMLElement("ul", ["id"=>"mylist", "class"=>"fancy-list"], [
     new HTMLElement("li", null, "Item 1"),
