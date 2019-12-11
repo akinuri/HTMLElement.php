@@ -11,9 +11,7 @@ class HTMLElement {
     public $children   = [];
     
     public function __construct(string $tagName, array $attributes = null, $children = null) {
-        if ($tagName) {
-            $this->tagName = $tagName;
-        }
+        $this->tagName = $tagName;
         
         if ($attributes) {
             foreach ($attributes as $key => $value) {
