@@ -70,7 +70,6 @@ class HTMLElement {
     }
     
     public function outerHTML($escape_function = null) {
-        
         $attributes = "";
         
         if ($this->id) {
