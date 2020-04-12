@@ -19,13 +19,21 @@ class HTMLElement {
             }
         }
         
-        if ($children) {
+        if ($children !== null) {
             $this->append($children);
         }
     }
     
+    public function getAttribute(string $attribute) {
+        return $this->attributes[$attribute] ?: null;
+    }
+    
     public function setAttribute(string $attribute, $value = "") {
         $this->attributes[$attribute] = $value;
+    }
+    
+    public function removeAttribute(string $attribute) {
+        unset($this->attributes[$attribute]);
     }
     
     public function append($element) {
@@ -94,6 +102,10 @@ class HTMLElement {
     
     public function output($escapeFunction = null) {
         echo $this->outerHTML($escapeFunction);
+    }
+    
+    public function __toString() {
+        return $this->outerHTML();
     }
 }
 
