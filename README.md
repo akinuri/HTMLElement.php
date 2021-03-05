@@ -22,15 +22,15 @@ new HTMLElement(string $tagName [, array $attributes = null [, $children = null]
 
 ### Methods
 
-* `getAttribute(string $attribute)`
+* `getAttribute(string $attribute): mixed`
 * `setAttribute(string $attribute, mixed $value = "")`
 * `removeAttribute(string $attribute)`
 * `append(mixed $element)`
 * `prepend(mixed $element)`
-* `innerHTML(callable $escapeFunction = null)`
-* `outerHTML(callable $escapeFunction = null)`
-* `openingTag()`
-* `closingTag()`
+* `innerHTML(callable $escapeFunction = null): string`
+* `outerHTML(callable $escapeFunction = null): string`
+* `openingTag(): string`
+* `closingTag(): string`
 * `output(callable $escapeFunction = null)`
 
 ## Usage
@@ -66,3 +66,8 @@ The above code produces the following HTML:
 ```
 
 <small>**Note**: The actual output is not indented. Might add that feature later. Maybe.</small>
+
+# [element.js](https://github.com/akinuri/element.js)
+
+This PPH code has a similar version in JS. In case, you want to do the same thing in both the server and the client.
+
