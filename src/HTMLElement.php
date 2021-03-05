@@ -148,12 +148,12 @@ class HTMLElement {
     }
     
     
-    public function outerHTML($escapeFunction = null): string {
+    public function outerHTML(callable $escapeFunction = null): string {
         return $this->openingTag() . $this->innerHMTL($escapeFunction) . $this->closingTag();
     }
     
     
-    public function output($escapeFunction = null): void {
+    public function output(callable $escapeFunction = null): void {
         echo $this->outerHTML($escapeFunction);
     }
     
