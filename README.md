@@ -69,5 +69,5 @@ The above code produces the following HTML:
 
 # [element.js](https://github.com/akinuri/element.js)
 
-This PPH code has a similar version in JS. In case, you want to do the same thing in both the server and the client.
+This PHP code has a similar version in JS. In case, you want to do the same thing in both the server and the client.
 
