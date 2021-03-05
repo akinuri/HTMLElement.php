@@ -7,30 +7,36 @@ I'm not a fan of mixing PHP with HTML when creating HTML code with lots of PHP v
 
 ## Syntax
 
+Syntax and the usage is very similar to [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) (JS API).
+
 ```php
-new HTMLElement(string $tagName [, array $attributes [, $children]])
+new HTMLElement(string $tagName [, array $attributes = null [, $children = null]])
 ```
 
 
 ### Parameters
 
 * `tagName` : tag name of the element
-* `attributes` : array with `property : value` pairs
-* `children` : child(ren) element(s); can be a `string`, `number`, `HTMLElement`, or an `array` of the listed
-
+* `attributes` : array with `property => value` pairs
+* `children` : an item (that can be a `string`, `number`, `HTMLElement`) or an array of items
 
 ### Methods
 
-* `setAttribute(string $attribute, $value = "")`
-* `append($element)`
+* `getAttribute(string $attribute)`
+* `setAttribute(string $attribute, mixed $value = "")`
+* `removeAttribute(string $attribute)`
+* `append(mixed $element)`
+* `prepend(mixed $element)`
 * `innerHTML(callable $escapeFunction = null)`
 * `outerHTML(callable $escapeFunction = null)`
+* `openingTag()`
+* `closingTag()`
 * `output(callable $escapeFunction = null)`
 
 ## Usage
 
 ```php
-$list = new HTMLElement("ul", ["id"=>"mylist", "class"=>"fancy-list"], [
+$list = new HTMLElement("ul", ["id" => "mylist", "class" => "fancy-list"], [
     new HTMLElement("li", null, "Item 1"),
     new HTMLElement("li", null, "Item 2"),
     new HTMLElement("li", null, "Item 3"),
@@ -39,7 +45,7 @@ $list->append(new HTMLElement("li", null, "Item 4"));
 $list->output();
 
 // or alternatively
-$list = elem("ul", ["id"=>"mylist", "class"=>"fancy-list"], [
+$list = elem("ul", ["id" => "mylist", "class" => "fancy-list"], [
     elem("li", null, "Item 1"),
     elem("li", null, "Item 2"),
     elem("li", null, "Item 3"),
