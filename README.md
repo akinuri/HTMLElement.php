@@ -7,7 +7,7 @@ I'm not a fan of mixing PHP with HTML when creating HTML code with lots of PHP v
 
 ## Syntax
 
-Syntax and the usage is very similar to [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) (JS API).
+The syntax and the usage is very similar to [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) (JS API).
 
 ```php
 new HTMLElement(string $tagName [, array $attributes = null [, $children = null]])
