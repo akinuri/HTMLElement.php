@@ -2,19 +2,20 @@
 
 class HTMLElement {
     
-    private static $SELF_CLOSING_TAGS = [ "meta", "input", "img", "link", "base" ];
+    private static $SELF_CLOSING_TAGS = [ "base", "meta", "link", "input", "img" ];
     
-    public $tagName    = null;
-    public $id         = null;
-    public $classList  = [];
-    public $attributes = [];
-    public $children   = [];
+    private $tagName    = null;
+    private $id         = null;
+    private $classList  = [];
+    private $attributes = [];
+    private $children   = [];
     
     
     public function __construct(string $tagName, array $attributes = null, $children = null) {
+        
         $this->tagName = $tagName;
         
-        if ($attributes) {
+        if (!empty($attributes)) {
             foreach ($attributes as $key => $value) {
                 $this->setAttribute($key, $value);
             }
@@ -26,12 +27,15 @@ class HTMLElement {
     }
     
     
+    
+    /* ======================================== ATTRIBUTES ======================================== */
+    
     public function getAttribute(string $attribute) {
         return $this->attributes[$attribute] ?? null;
     }
     
     
-    public function setAttribute(string $attribute, $value = ""): void {
+    public function setAttribute(string $attribute, $value = "") {
         $this->attributes[$attribute] = $value;
         if ($attribute == "id") {
             $this->id = $value;
@@ -41,7 +45,7 @@ class HTMLElement {
     }
     
     
-    public function removeAttribute(string $attribute): void {
+    public function removeAttribute(string $attribute) {
         unset($this->attributes[$attribute]);
         if ($attribute == "id") {
             $this->id = null;
@@ -51,7 +55,50 @@ class HTMLElement {
     }
     
     
-    public function append($element): void {
+    
+    /* ======================================== CLASS ======================================== */
+    
+    public function addClass(string $class) {
+        $class = \explode(" ", $class);
+        foreach ($class as $item) {
+            if (!\in_array($item, $this->classList)) {
+                $this->classList[] = $item;
+            }
+        }
+        $this->syncClassAttribute();
+    }
+    
+    
+    public function removeClass(string $class) {
+        $class = \explode(" ", $class);
+        foreach ($class as $item) {
+            if (\in_array($item, $this->classList)) {
+                $this->classList = Array2::removeValue($item);
+            }
+        }
+        $this->syncClassAttribute();
+    }
+    
+    
+    private function syncClassAttribute() {
+        $this->attributes["class"] = \implode(" ", $this->classList);
+    }
+    
+    
+    public function hasClass(string $class): bool {
+        return \in_array($class, $this->classList);
+    }
+    
+    
+    public function getClassList(): array {
+        return $this->classList();
+    }
+    
+    
+    
+    /* ======================================== CHILDREN ======================================== */
+    
+    public function append($element) {
         switch (\gettype($element)) {
             case "string":
             case "integer":
@@ -76,7 +123,7 @@ class HTMLElement {
     }
     
     
-    public function prepend($element): void {
+    public function prepend($element) {
         switch (gettype($element)) {
             case "string":
             case "integer":
@@ -100,6 +147,9 @@ class HTMLElement {
         }
     }
     
+    
+    
+    /* ======================================== HTML ======================================== */
     
     function innerHMTL(callable $escapeFunction = null): string {
         $innerHMTL = "";
@@ -153,7 +203,10 @@ class HTMLElement {
     }
     
     
-    public function output(callable $escapeFunction = null): void {
+    
+    /* ======================================== OUTPUT ======================================== */
+    
+    public function output(callable $escapeFunction = null) {
         echo $this->outerHTML($escapeFunction);
     }
     
