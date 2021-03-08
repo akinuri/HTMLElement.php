@@ -36,6 +36,7 @@ class HTMLElement {
     
     
     public function setAttribute(string $attribute, $value = "") {
+        $value = (string) $value;
         $this->attributes[$attribute] = $value;
         if ($attribute == "id") {
             $this->id = $value;

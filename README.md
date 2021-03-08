@@ -22,9 +22,13 @@ new HTMLElement(string $tagName [, array $attributes = null [, $children = null]
 
 ### Methods
 
-* `getAttribute(string $attribute): mixed`
+* `getAttribute(string $attribute): ?string`
 * `setAttribute(string $attribute, mixed $value = "")`
 * `removeAttribute(string $attribute)`
+* `addClass(string $class)`
+* `removeClass(string $class)`
+* `hasClass(string $class): bool`
+* `getClassList(): array`
 * `append(mixed $element)`
 * `prepend(mixed $element)`
 * `innerHTML(callable $escapeFunction = null): string`
