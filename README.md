@@ -47,7 +47,7 @@ $mylist = new HTMLElement("ul", ["id" => "mylist", "class" => "fancy-list"], [
     new HTMLElement("li", "Item 2"),
     new HTMLElement("li", "Item 3"),
 ]);
-$mylist->append(new HTMLElement("li", null, "Item 4"));
+$mylist->append(new HTMLElement("li", "Item 4"));
 $mylist->output();
 
 // or alternatively
@@ -56,7 +56,7 @@ $mylist = elem("ul", ["id" => "mylist", "class" => "fancy-list"], [
     elem("li", "Item 2"),
     elem("li", "Item 3"),
 ]);
-$mylist->append(elem("li", null, "Item 4"));
+$mylist->append(elem("li", "Item 4"));
 $mylist->output();
 ```
 
