@@ -17,7 +17,7 @@ new HTMLElement(string $tagName [, array $attributes = null [, $children = null]
 ### Parameters
 
 * `tagName` : tag name of the element
-* `attributes` : array with `property => value` pairs
+* `attributes` : array with `property => value` pairs (can be skipped)
 * `children` : an item (that can be a `string`, `number`, `HTMLElement`) or an array of items
 
 ### Methods
@@ -25,10 +25,12 @@ new HTMLElement(string $tagName [, array $attributes = null [, $children = null]
 * `getAttribute(string $attribute): ?string`
 * `setAttribute(string $attribute, mixed $value = "")`
 * `removeAttribute(string $attribute)`
+* `setId($id)`
 * `addClass(string $class)`
 * `removeClass(string $class)`
 * `hasClass(string $class): bool`
 * `getClassList(): array`
+* `getChildren(): array`
 * `append(mixed $element)`
 * `prepend(mixed $element)`
 * `innerHTML(callable $escapeFunction = null): string`

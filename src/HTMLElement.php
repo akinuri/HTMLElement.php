@@ -20,6 +20,7 @@ class HTMLElement {
         $this->tagName = $tagName;
         
         // I'm tired of using null as the $attributes, e.g.: new HTMLElement("div", null, ["some", "elements"])
+        // Wouldn't it be nice if I could just do: new HTMLElement("div", ["some", "elements"])
         // $attributes expects a non-sequential associative array; we can use that to differentiate
         if (!empty($attributes) && $children == null) {
             if ( (\is_array($attributes) && Array2::isSequential($attributes)) || !\is_array($attributes)) {
@@ -113,7 +114,7 @@ class HTMLElement {
     
     #region ==================== CHILDREN
     
-    public function getChildren() {
+    public function getChildren(): array {
         return $this->children;
     }
     
