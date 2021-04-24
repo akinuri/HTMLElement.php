@@ -42,22 +42,22 @@ new HTMLElement(string $tagName [, array $attributes = null [, $children = null]
 ## Usage
 
 ```php
-$list = new HTMLElement("ul", ["id" => "mylist", "class" => "fancy-list"], [
+$mylist = new HTMLElement("ul", ["id" => "mylist", "class" => "fancy-list"], [
     new HTMLElement("li", null, "Item 1"),
-    new HTMLElement("li", null, "Item 2"),
-    new HTMLElement("li", null, "Item 3"),
+    new HTMLElement("li", "Item 2"),
+    new HTMLElement("li", "Item 3"),
 ]);
-$list->append(new HTMLElement("li", null, "Item 4"));
-$list->output();
+$mylist->append(new HTMLElement("li", null, "Item 4"));
+$mylist->output();
 
 // or alternatively
-$list = elem("ul", ["id" => "mylist", "class" => "fancy-list"], [
+$mylist = elem("ul", ["id" => "mylist", "class" => "fancy-list"], [
     elem("li", null, "Item 1"),
-    elem("li", null, "Item 2"),
-    elem("li", null, "Item 3"),
+    elem("li", "Item 2"),
+    elem("li", "Item 3"),
 ]);
-$list->append(elem("li", null, "Item 4"));
-$list->output();
+$mylist->append(elem("li", null, "Item 4"));
+$mylist->output();
 ```
 
 The above code produces the following HTML:
