@@ -1,8 +1,10 @@
 <?php
 
+namespace Noreh\System\Libraries;
+
 class HTMLElement {
     
-    private static $SELF_CLOSING_TAGS = [ "base", "meta", "link", "input", "img" ];
+    private static $SELF_CLOSING_TAGS = ["base", "meta", "link", "input", "img"];
     
     private $tagName    = null;
     private $id         = null;
@@ -11,9 +13,20 @@ class HTMLElement {
     private $children   = [];
     
     
-    public function __construct(string $tagName, array $attributes = null, $children = null) {
+    #region ==================== CONSTRUCT
+    
+    public function __construct(string $tagName, $attributes = null, $children = null) {
         
         $this->tagName = $tagName;
+        
+        // I'm tired of using null as the $attributes, e.g.: new HTMLElement("div", null, ["some", "elements"])
+        // $attributes expects a non-sequential associative array; we can use that to differentiate
+        if (!empty($attributes) && $children == null) {
+            if ( (\is_array($attributes) && Array2::isSequential($attributes)) || !\is_array($attributes)) {
+                $children = $attributes;
+                $attributes = null;
+            }
+        }
         
         if (!empty($attributes)) {
             foreach ($attributes as $key => $value) {
@@ -26,14 +39,14 @@ class HTMLElement {
         }
     }
     
+    #endregion
     
     
-    /* ======================================== ATTRIBUTES ======================================== */
+    #region ==================== ATTRIBUTES
     
-    public function getAttribute(string $attribute) {
+    public function getAttribute(string $attribute): ?string {
         return $this->attributes[$attribute] ?? null;
     }
-    
     
     public function setAttribute(string $attribute, $value = "") {
         $value = (string) $value;
@@ -45,7 +58,6 @@ class HTMLElement {
         }
     }
     
-    
     public function removeAttribute(string $attribute) {
         unset($this->attributes[$attribute]);
         if ($attribute == "id") {
@@ -55,9 +67,14 @@ class HTMLElement {
         }
     }
     
+    public function setId($id) {
+        $this->setAttribute("id", (string) $id);
+    }
+    
+    #endregion
     
     
-    /* ======================================== CLASS ======================================== */
+    #region ==================== CLASS
     
     public function addClass(string $class) {
         $class = \explode(" ", $class);
@@ -69,7 +86,6 @@ class HTMLElement {
         $this->syncClassAttribute();
     }
     
-    
     public function removeClass(string $class) {
         $class = \explode(" ", $class);
         foreach ($class as $item) {
@@ -80,24 +96,26 @@ class HTMLElement {
         $this->syncClassAttribute();
     }
     
-    
     private function syncClassAttribute() {
         $this->attributes["class"] = \implode(" ", $this->classList);
     }
-    
     
     public function hasClass(string $class): bool {
         return \in_array($class, $this->classList);
     }
     
-    
     public function getClassList(): array {
         return $this->classList();
     }
     
+    #endregion
     
     
-    /* ======================================== CHILDREN ======================================== */
+    #region ==================== CHILDREN
+    
+    public function getChildren() {
+        return $this->children;
+    }
     
     public function append($element) {
         switch (\gettype($element)) {
@@ -123,7 +141,6 @@ class HTMLElement {
         }
     }
     
-    
     public function prepend($element) {
         switch (gettype($element)) {
             case "string":
@@ -148,9 +165,10 @@ class HTMLElement {
         }
     }
     
+    #endregion
     
     
-    /* ======================================== HTML ======================================== */
+    #region ==================== HTML
     
     function innerHMTL(callable $escapeFunction = null): string {
         $innerHMTL = "";
@@ -169,7 +187,6 @@ class HTMLElement {
         return $innerHMTL;
     }
     
-    
     public function openingTag(): string {
         $attributes = "";
         
@@ -182,8 +199,11 @@ class HTMLElement {
             $attributes .= " class=\"{$classes}\"";
         }
         
+        $alreadyOutputAttributes = ["id", "class"];
         foreach ($this->attributes as $attr => $value) {
-            $attributes .= " {$attr}=\"{$value}\"";
+            if (!\in_array($attr, $alreadyOutputAttributes)) {
+                $attributes .= " {$attr}=\"{$value}\"";
+            }
         }
         
         if (\in_array($this->tagName, self::$SELF_CLOSING_TAGS)) {
@@ -193,35 +213,34 @@ class HTMLElement {
         return "<{$this->tagName}{$attributes}>";
     }
     
-    
     public function closingTag(): string {
         return "</{$this->tagName}>";
     }
-    
     
     public function outerHTML(callable $escapeFunction = null): string {
         return $this->openingTag() . $this->innerHMTL($escapeFunction) . $this->closingTag();
     }
     
+    #endregion
     
     
-    /* ======================================== OUTPUT ======================================== */
+    #region ==================== OUTPUT
     
     public function output(callable $escapeFunction = null) {
         echo $this->outerHTML($escapeFunction);
     }
     
-    
     public function __toString(): string {
         return $this->outerHTML();
     }
     
+    #endregion
     
 }
 
 /**
  * A wrapper for the HTMLElement for quicker access.
  */
-function elem(string $tagName, array $attributes = null, $children = null) {
+function elem(string $tagName, $attributes = null, $children = null) {
     return new HTMLElement($tagName, $attributes, $children);
 }
