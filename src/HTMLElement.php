@@ -1,7 +1,5 @@
 <?php
 
-namespace Noreh\System\Libraries;
-
 class HTMLElement {
     
     private static $SELF_CLOSING_TAGS = ["base", "meta", "link", "input", "img"];
